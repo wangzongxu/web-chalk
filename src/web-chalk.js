@@ -10,10 +10,10 @@
 })('webChalk', function() {
     function WebChalk(template, cssObj, defaultCss) {
         if (typeof template !== 'string') {
-            throw new Error('template must be a string')
+            throw new Error('The first argument must be a string')
         }
         if (typeof cssObj !== 'object') {
-            throw new Error('cssObj must be a object')
+            throw new Error('The second argument must be a object')
         }
         if (!(this instanceof WebChalk)) {
             return new WebChalk(template, cssObj, defaultCss)
