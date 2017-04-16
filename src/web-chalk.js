@@ -1,0 +1,136 @@
+;
+(function(name, factory) {
+    if (typeof define !== 'undefined') {
+        define(factory)
+    } else if (typeof module == 'object' && module.exports) {
+        module.exports = factory()
+    } else {
+        this[name] = factory()
+    }
+})('webChalk', function() {
+    function WebChalk(template, cssObj, defaultCss) {
+        if (typeof template !== 'string') {
+            throw new Error('template must be a string')
+        }
+        if (typeof cssObj !== 'object') {
+            throw new Error('cssObj must be a object')
+        }
+        if (!(this instanceof WebChalk)) {
+            return new WebChalk(template, cssObj, defaultCss)
+        }
+        if (!this.hasChildObject(cssObj)) {
+            console.log('%c' + template, this.formatCss(cssObj));
+            return;
+        }
+        this.str = template;
+        this.css = cssObj || {};
+        this.openTag = /</;
+        this.classTag = /^([a-zA-Z]+?)>([\s\S]*)/;
+        this.closeTag = /\/([a-zA-Z]+?)>([\s\S]*)/;
+        this.result = '';
+        this.logArr = [];
+        this.dafaultCss = this.formatCss(defaultCss);
+        this.init();
+    }
+    WebChalk.prototype = {
+        init: function() {
+            this.css = this.handleCss(this.css);
+            this.handleTpl();
+        },
+        output: function() {
+            this.logArr.unshift(this.result);
+            console.log.apply(null, this.logArr)
+        },
+        formatCss: function(cssObj) {
+            cssObj = cssObj || {};
+            var str = '';
+            var that = this;
+            that.each(cssObj, function(key, val) {
+                str += that.formatHumpName(key) + ':' + val + ';'
+            })
+            return str
+        },
+        handleCss: function(cssObj) { //处理样式
+            var that = this;
+            var result = {};
+            that.each(cssObj, function(key, val) {
+                result[key] = that.formatCss(val);
+            });
+            return result
+        },
+        handleTpl: function() { //处理模板
+            var that = this;
+            var arr = that.str.split(that.openTag);
+            if(arr.length === 1){ // 没有标签
+              console.log('%c' + that.str, that.dafaultCss);
+              return
+            }
+            var openClassAll = []; //所有的开标签
+            var closeCloseAll = []; //所有的闭标签
+            that.each(arr,function(item) {
+                var openClass = item.match(that.classTag);
+                var closeClose = item.match(that.closeTag);
+                var className = '';
+                var content;
+                if (openClass) {
+                    className = openClass[1];
+                    openClassAll.push(className);
+                    content = openClass[2]; //没有内容就是 ''
+                    that.result += '%c' + content;
+                    that.logArr.push(that.css[className] || that.dafaultCss);//没定义class按默认
+                } else if (closeClose) {
+                    className = closeClose[1];
+                    closeCloseAll.push(className || that.dafaultCss);
+                    content = closeClose[2]; //没有内容就是 ''
+                    that.result += '%c' + content;
+                    if (content != '') {
+                        var nearClass = that.findClass(openClassAll, closeCloseAll);
+                        that.logArr.push(that.css[nearClass] || that.dafaultCss);
+                    } else {
+                        that.logArr.push(that.dafaultCss);
+                    }
+                } else { // maybe a string in empty
+                    that.result += '%c' + item;
+                    that.logArr.push(that.dafaultCss);
+                }
+            });
+            this.output();
+        },
+        findClass: function(o, close) { //通过两个标签数组[abc,bc]，找到多层标签时，内容所属的最近标签<a><b></b>abc</a>: abc属于a标签
+            var open = o.slice();
+            var lastClass = open.pop();
+            while (lastClass && close.indexOf(lastClass) > -1) {
+                lastClass = open.pop();
+            }
+            return lastClass
+        },
+        formatHumpName:function(name) {
+            return name.replace(/([a-z])([A-Z])/, function(res, g, G) {
+                return g + '-' + G.toLowerCase()
+            })
+        },
+        each:function(obj, cb) {
+            if (typeof obj !== 'object') return;
+            if(obj instanceof Array){
+              obj.forEach(function(item,index,obj){
+                cb(item,index,obj)
+              });
+              return
+            }
+            Object.keys(obj).forEach(function(key) {
+                cb(key, obj[key], obj)
+            })
+        },
+        hasChildObject:function(obj){//包含对象
+          var isObject;
+          this.each(obj,function(key,val){
+            if(typeof val === 'object'){
+              isObject = true;
+            }
+          })
+          return isObject
+        }
+    }
+
+    return WebChalk
+});
