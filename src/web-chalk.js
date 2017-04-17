@@ -96,11 +96,14 @@
             });
             this.output();
         },
-        findClass: function(o, close) { //通过两个标签数组[abc,bc]，找到多层标签时，内容所属的最近标签<a><b></b>abc</a>: abc属于a标签
-            var open = o.slice();
+        findClass: function(o, c) { //通过两个标签数组[abc,bc]，找到多层标签时，内容所属的最近的并且没有结束的标签<b><a><b></b>abc</a></b>: abc属于a标签
+            var open = o.slice(),close = c.slice();
             var lastClass = open.pop();
-            while (lastClass && close.indexOf(lastClass) > -1) {
+            var hasClose = close.indexOf(lastClass);
+            while (lastClass && hasClose > -1) {
                 lastClass = open.pop();
+                close.splice(hasClose, 1);
+                hasClose = close.indexOf(lastClass);
             }
             return lastClass
         },
