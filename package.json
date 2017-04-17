@@ -1,5 +1,5 @@
 {
-  "name": "webChalk",
+  "name": "web-chalk",
   "version": "1.0.0",
   "description": "Print beautiful words on the console",
   "main": "index.js",
