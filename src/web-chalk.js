@@ -121,7 +121,7 @@
             if (typeof obj !== 'object') return;
             if(obj instanceof Array){
               for(var i=0;i<obj.length;i++){
-                cb(obj[i],index,obj);
+                cb(obj[i],i,obj);
               }
               return
             }
