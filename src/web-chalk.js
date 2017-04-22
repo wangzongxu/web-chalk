@@ -18,6 +18,11 @@
         if (!(this instanceof WebChalk)) {
             return new WebChalk(template, cssObj, defaultCss)
         }
+        if(this.isIE()){// ie
+          template = template.replace(/<(\/?[a-zA-Z]+?)>/g,'');
+          console.log(template);
+          return;
+        }
         if (!this.hasChildObject(cssObj)) {
             console.log('%c' + template, this.formatCss(cssObj));
             return;
@@ -115,14 +120,16 @@
         each:function(obj, cb) {
             if (typeof obj !== 'object') return;
             if(obj instanceof Array){
-              obj.forEach(function(item,index,obj){
-                cb(item,index,obj)
-              });
+              for(var i=0;i<obj.length;i++){
+                cb(item,index,obj);
+              }
               return
             }
-            Object.keys(obj).forEach(function(key) {
-                cb(key, obj[key], obj)
-            })
+            for(var k in obj){
+              if(obj.hasOwnProperty(k)){
+                cb(k, obj[k], obj)
+              }
+            }
         },
         hasChildObject:function(obj){//包含对象
           var isObject;
@@ -132,6 +139,13 @@
             }
           })
           return isObject
+        },
+        isIE:function(){
+          var ns = navigator.userAgent;
+          if(/MSIE|TRIGENT/i.test(ns)){
+            return true;
+          }
+          return false;
         }
     }
 
