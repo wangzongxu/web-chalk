@@ -142,7 +142,7 @@
         },
         isIE:function(){
           var ns = navigator.userAgent;
-          if(/MSIE|TRIGENT/i.test(ns)){
+          if(/MSIE|TRIDENT/i.test(ns)){
             return true;
           }
           return false;
