@@ -8,33 +8,29 @@
         this[name] = factory()
     }
 })('webChalk', function() {
-    function WebChalk(template, cssObj, defaultCss) {
+    function WebChalk(template, config) {
         if (typeof template !== 'string') {
             throw new Error('The first argument must be a string')
         }
-        if (typeof cssObj !== 'object') {
+        if (typeof config !== 'object') {
             throw new Error('The second argument must be a object')
         }
         if (!(this instanceof WebChalk)) {
-            return new WebChalk(template, cssObj, defaultCss)
+            return new WebChalk(template, config)
         }
         if(this.isIE()){// ie
           template = template.replace(/<(\/?[a-zA-Z]+?)>/g,'');
           console.log(template);
           return;
         }
-        if (!this.hasChildObject(cssObj)) {
-            console.log('%c' + template, this.formatCss(cssObj));
-            return;
-        }
         this.str = template;
-        this.css = cssObj || {};
+        this.css = config.style || {};
         this.openTag = /</;
         this.classTag = /^([a-zA-Z]+?)>([\s\S]*)/;
         this.closeTag = /\/([a-zA-Z]+?)>([\s\S]*)/;
         this.result = '';
         this.logArr = [];
-        this.dafaultCss = this.formatCss(defaultCss);
+        this.dafaultCss = this.formatCss(config.default);
         this.init();
     }
     WebChalk.prototype = {
@@ -130,15 +126,6 @@
                 cb(k, obj[k], obj)
               }
             }
-        },
-        hasChildObject:function(obj){//包含对象
-          var isObject;
-          this.each(obj,function(key,val){
-            if(typeof val === 'object'){
-              isObject = true;
-            }
-          })
-          return isObject
         },
         isIE:function(){
           var ns = navigator.userAgent;

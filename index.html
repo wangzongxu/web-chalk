@@ -16,38 +16,36 @@
 <script src="./src/web-chalk.js" charset="utf-8"></script>
 <script type="text/javascript">
     var str =
-        "\
-  <b>██</b>\n\
-  <b>██</b>\n\
-  <b>██</b>   <g>██████</g>   ██       ████████   ████████   ██     ██\n\
-  <b>██</b>            ██       ███           ██       ██   ██\n\
-  <bl>██</bl><gr>██████</gr>      ██       ████████      ██        ██ ██\n\
-                ██       ███           ██         ███\n\
-       <r>██████</r>   ██████   ████████      ██   <b>^_^</b>    █"
+        "\n\
+        <b>██</b>          <r>███████</r>         <g>███████</g>\n\
+      <b>██  ██</b>        <r>██     ██</r>     <g>██</g>\n\
+     <b>██ ▄▄ ██</b>       <r>███████</r>       <g>██</g>\n\
+    <b>██      ██</b>      <r>██     ██</r>     <g>██</g>\n\
+   <b>██        ██</b>     <r>███████</r>         <g>███████</g>  <b>A</b> <r>B</r> <g>C</g>\n\
+    "
     var css = {
         b: {
             color: 'rgb(29,174,229)'
-        },
-        bl: {
-            color: 'rgb(67,81,84)'
         },
         r: {
             color: 'rgb(218,14,26)'
         },
         g: {
             color: 'rgb(171,204,3)'
-        },
-        gr: {
-            color: 'rgb(92,104,104)'
         }
     }
 
-    webChalk(str, css, {
-      color: 'gray'
+    webChalk(str, {
+        style: css,
+        default: {
+            color: 'gray'
+        }
     })
 
     webChalk('PURPLE', {
-        color: 'purple',
-        fontSize: '30px'
+        default: {
+            color: 'purple',
+            fontSize: '30px'
+        }
     });
 </script>

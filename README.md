@@ -25,26 +25,24 @@ var webChalk = require('web-chalk');
 
 1. make a pattern of strings
 ```js
-var str = "\
-    ██\n\
-    ██\n\
-    ██   ██████   ██       ████████   ████████   ██     ██\n\
-    ██            ██       ███           ██       ██   ██\n\
-    ████████      ██       ████████      ██        ██ ██\n\
-                  ██       ███           ██         ███\n\
-         ██████   ██████   ████████      ██   ^_^    █"
+var str = "\n\
+        ██          ███████         ███████\n\
+      ██  ██        ██     ██     ██\n\
+     ██ ▄▄ ██       ███████       ██\n\
+    ██      ██      ██     ██     ██\n\
+   ██        ██     ███████         ███████   A  B  C\n\
+    "
 ```
 
 2. add color
 ```js
-var str_ = "\
-    <b>██</b>\n\
-    <b>██</b>\n\
-    <b>██</b>   <g>██████</g>   ██       ████████   ████████   ██     ██\n\
-    <b>██</b>            ██       ███           ██       ██   ██\n\
-    <bl>██</bl><gr>██████</gr>      ██       ████████      ██        ██ ██\n\
-    ██       ███           ██         ███\n\
-    <r>██████</r>   ██████   ████████      ██   <b>^_^</b>    █"
+var str_ = "\n\
+        <b>██</b>          <r>███████</r>         <g>███████</g>\n\
+      <b>██  ██</b>        <r>██     ██</r>     <g>██</g>\n\
+     <b>██ ▄▄ ██</b>       <r>███████</r>       <g>██</g>\n\
+    <b>██      ██</b>      <r>██     ██</r>     <g>██</g>\n\
+   <b>██        ██</b>     <r>███████</r>         <g>███████</g>  <b>A</b> <r>B</r> <g>C</g>\n\
+    "
 ```
 
 3. define the class name in a css Object, the string wrapped by the class name tag will have the color of the corresponding class name
@@ -77,14 +75,20 @@ var defaultCss = {
 
 5. output
 ```js
-//params:(target[string], cssClass[Object] ,(?defaultCss[defaultCss list]))
-webChalk(str, cssClass, defaultCss);
+// params:(target[string], config[object])
+// config: {style[object], default[object]?}
+webChalk(str, {
+    style: cssClass,
+    default: defaultCss
+});
 ```
 
-> If your entire string style is the same,You can omit the cssClass parameter
+> If your entire string style is the same,You can omit the style parameter
 
 ```js
-webChalk(str, defaultCss);
+webChalk(str,  {
+    default: defaultCss
+});
 ```
 ## License:
 MIT

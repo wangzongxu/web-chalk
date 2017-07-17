@@ -1,6 +1,6 @@
 {
   "name": "web-chalk",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "Print beautiful words on the console",
   "main": "dist/web-chalk.min.js",
   "scripts": {
