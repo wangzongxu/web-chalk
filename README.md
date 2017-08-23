@@ -12,11 +12,11 @@ $ npm install web-chalk --save
 
 ### ready
 
-- AMD
 ```js
 var webChalk = require('web-chalk');
 ```
-- inline
+
+- or
 ```html
 <script src='./web-chalk.min.js' type="text/javascript"></script>
 ```
