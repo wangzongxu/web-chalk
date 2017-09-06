@@ -12,7 +12,7 @@ $ npm install web-chalk --save
 
 ### ready
 
-- AMD
+- require
 ```js
 var webChalk = require('web-chalk');
 ```
@@ -90,5 +90,13 @@ webChalk(str,  {
     default: defaultCss
 });
 ```
+
+#### others methods
+
+- webChalk.log('abc')
+- webChalk.warn('abc')
+- webChalk.error('abc')
+- webChalk.info('abc')
+
 ## License:
 MIT
