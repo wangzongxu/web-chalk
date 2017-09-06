@@ -16,7 +16,8 @@ $ npm install web-chalk --save
 ```js
 var webChalk = require('web-chalk');
 ```
-- inline
+
+- or
 ```html
 <script src='./web-chalk.min.js' type="text/javascript"></script>
 ```
