@@ -179,7 +179,7 @@
         base.style.tip.background = 'rgb(235, 57, 65)'
         base.style.text.background = 'rgb(251, 236, 236)'
         webChalk(log, base)
-      },
+      }
     }
 
     for (var type in preset) {
