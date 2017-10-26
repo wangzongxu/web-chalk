@@ -1,6 +1,7 @@
 # web-chalk
 
-Print beautiful words on the console
+Print beautiful words on the console.
+[demo](https://wangzongxu.github.io/web-chalk/)
 ![web-chalk](https://wangzongxu.github.io/img-cache/webchalk/webchalk.png)
 ## Installing
 
